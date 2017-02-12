@@ -1,0 +1,12 @@
+.screentop {
+  transition-property: transform;
+  transition-duration: 0.3s;
+
+  @nest &-fixed {
+    left: 0;
+    position: fixed;
+    top: -54px;
+    transform: translate3d(0, 54px, 0);
+    z-index: 1;
+  }
+}

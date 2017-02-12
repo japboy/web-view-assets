@@ -1,0 +1,16 @@
+/**
+ * accordion
+ */
+
+.accordion {
+  height: 300px;
+  overflow-y: hidden;
+
+  @nest &[aria-expanded="true"] {
+    overflow-y: inherit;
+  }
+
+  @nest &[aria-expanded="false"] {
+    overflow-y: inherit;
+  }
+}

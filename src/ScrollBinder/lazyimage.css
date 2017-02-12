@@ -1,0 +1,14 @@
+.lazyimage {
+  transition-property: opacity, visibility;
+  transition-duration: 0.3s;
+
+  @nest &[aria-hidden="true"] {
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  @nest &[aria-hidden="false"] {
+    opacity: 1;
+    visibility: visible;
+  }
+}
