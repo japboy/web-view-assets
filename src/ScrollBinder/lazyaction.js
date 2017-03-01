@@ -1,11 +1,13 @@
 import { scrollBind } from './scrollbind'
 
-function preproc () {}
+function preprocess () {}
 
-function proc (element, callback, ...args) {
-  callback.apply(undefined, [ element ].concat(args))
+function process (element, callback, ...args) {
+  callback(...[element].concat(args))
 }
 
-function postproc () {}
+function postprocess () {}
 
-export const lazyaction = scrollBind(preproc, proc, postproc)
+const lazyaction = scrollBind(preprocess, process, postprocess)
+
+export default lazyaction

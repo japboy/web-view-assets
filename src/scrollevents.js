@@ -1,7 +1,7 @@
 import { lazyaction, lazyimage, screentop } from './ScrollBinder/index'
 import './ScrollBinder/lazyimage.css'
 import './ScrollBinder/position.css'
-import './scrollevents.css'
+import './main.css'
 
 function action (element, message) {
   element.textContent = `Hello, ${message()}.`

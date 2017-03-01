@@ -1,8 +1,8 @@
 import { topPositionBind, bottomPositionBind } from './scrollbind'
 
-function preproc () {}
+function preprocess () {}
 
-function proc (element, ontop) {
+function process (element, ontop) {
   if (ontop) {
     element.classList.remove('screentop-fixed')
   } else {
@@ -10,7 +10,7 @@ function proc (element, ontop) {
   }
 }
 
-function postproc () {}
+function postprocess () {}
 
-export const screentop = topPositionBind(preproc, proc, postproc)
-export const screenbottom = bottomPositionBind(preproc, proc, postproc)
+export const screentop = topPositionBind(preprocess, process, postprocess)
+export const screenbottom = bottomPositionBind(preprocess, process, postprocess)

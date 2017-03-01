@@ -1,10 +1,10 @@
 import { scrollBind } from './scrollbind'
 
-function preproc (element) {
+function preprocess (element) {
   element.setAttribute('aria-hidden', 'true')
 }
 
-function proc (element, dataname) {
+function process (element, dataname) {
   element.addEventListener('load', function load (ev) {
     element.removeEventListener(ev.type, load)
     element.setAttribute('aria-hidden', 'false')
@@ -12,6 +12,8 @@ function proc (element, dataname) {
   element.setAttribute('src', element.dataset[dataname])
 }
 
-function postproc (element) {}
+function postprocess () {}
 
-export const lazyimage = scrollBind(preproc, proc, postproc)
+const lazyimage = scrollBind(preprocess, process, postprocess)
+
+export default lazyimage

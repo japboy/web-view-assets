@@ -1,13 +1,5 @@
-/**
- * accordion
- */
+import { expand } from './expand'
 
-import './index.css'
-
-function init () {
-  console.log('Yo.')
-}
-
-export default {
-  init
+export {
+  expand
 }
