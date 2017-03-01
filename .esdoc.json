@@ -1,0 +1,8 @@
+{
+  "source": "./src",
+  "destination": "./docs/api",
+  "excludes": [
+    "accordions.js",
+    "scrollevents.js"
+  ]
+}

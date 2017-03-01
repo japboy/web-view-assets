@@ -1,7 +1,12 @@
 /**
+ * JavaScript helper functions
+ */
+
+/**
  * Get width & height of hidden element
  */
 export function elementSize (el) {
+  /* eslint-disable no-param-reassign */
   const style = global.getComputedStyle(el)
   const styleDisplay = style.display
   const styleMaxHeight = style.maxHeight.replace(/(px|%)/, '')
@@ -36,3 +41,10 @@ export function elementSize (el) {
 
   return size
 }
+
+export function eventTrigger (element, eventname) {
+  const event = document.createEvent('HTMLEvents')
+  event.initEvent(eventname, true, true)
+  return element.dispatchEvent(event)
+}
+

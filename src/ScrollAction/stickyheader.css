@@ -1,12 +1,14 @@
-.screentop {
+.stickyheader {
   transition-property: transform;
   transition-duration: 0.3s;
 
-  @nest &-fixed {
+  @nest &[aria-label="scroll"] {
+    position: relative;
+  }
+
+  @nest &[aria-label="fixed"] {
     left: 0;
     position: fixed;
-    top: -54px;
-    transform: translate3d(0, 54px, 0);
     z-index: 1;
   }
 }

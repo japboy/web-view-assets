@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../../">
+  <title data-ice="title">src/Storage/cookie.js | API Document</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  
+  
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">Accordion</div><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-expand">expand</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">Helper</div><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-elementSize">elementSize</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-eventTrigger">eventTrigger</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">ScrollAction</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/ScrollAction/container.js~Container.html">Container</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/ScrollAction/container.js~ParentContainer.html">ParentContainer</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/ScrollAction/container.js~TargetContainer.html">TargetContainer</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/ScrollAction/container.js~WindowContainer.html">WindowContainer</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-lazyaction">lazyaction</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-lazyimage">lazyimage</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-onBottom">onBottom</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-onScroll">onScroll</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-onTop">onTop</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-stickyheader">stickyheader</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">Storage</div><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-clear">clear</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getItem">getItem</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-hasItem">hasItem</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-keys">keys</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-removeItem">removeItem</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-setItem">setItem</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-supported">supported</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">src/Storage/cookie.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import _ from &apos;underscore&apos;
+
+/**
+ * Fundamental cookie reader and writer
+ * @see https://developer.mozilla.org/en-US/document./Web/API/document.ment/cookie
+ * @see https://gist.github.com/cou929/7869555
+ */
+
+const escapedKey = key =&gt; encodeURIComponent(key).replace(/[-.+*]/g, &apos;\\$&amp;&apos;)
+const keyPattern = key =&gt; new RegExp(`(?:(?:^|.*)\\s*${key}\\s*\\=\\s*([^]*).*$)|^.*$`)
+
+/**
+ * Get the value of specified key
+ * @param {String} key Key string
+ * @returns {String|Null} Value string for specified key
+ */
+export function getItem (key) {
+  if (!_.isString(key)) return null
+  return decodeURIComponent(document.cookie.replace(keyPattern(escapedKey(key)), &apos;$1&apos;)) || null
+}
+
+/**
+ * Create or update the pair of key and value
+ * @param {String} key Key string
+ * @param {String} val Value string
+ * @param {Number|String|Date} end Seconds for `max-age` or date string/object for `expires`
+ * @param {String} path Target path affected by this cookie
+ * @param {String} domain Target domain name affected by this cookie
+ * @param {Boolean} secure Flag to transmit this cookie only by HTTPS
+ * @returns {Boolean} Flag whether the process completes successfully or not
+ */
+export function setItem (key, val, end, path, domain, secure) {
+  if (!key || /^(?:expires|max-age|path|domain|secure)$/i.test(key)) return false
+  let expires = &apos;&apos;
+  if (end) {
+    switch (end.constructor) {
+      case Number:
+        expires = (Infinity === end) ? &apos; expires=Tue, 19 Jan 2038 03:14:07 GMT&apos; : ` max-age=${end}`
+        break
+      case String:
+        expires = ` expires=${end}`
+        break
+      case Date:
+        expires = ` expires=${end.toUTCString()}`
+        break
+      default:
+        expires = &apos;&apos;
+    }
+  }
+  document.cookie = `${encodeURIComponent(key)}=${encodeURIComponent(val)}${expires}${_.isString(domain) ? ` domain=${domain}` : &apos;&apos;}${_.isString(path) ? ` path=${path}` : &apos;&apos;}${secure ? &apos; secure&apos; : &apos;&apos;}`
+  return true
+}
+
+/**
+ * Check whether the key exists or not
+ * @param {String} key Key string
+ * @returns {Boolean} Flag for the existence
+ */
+export function hasItem (key) {
+  if (!_.isString(key)) return false
+  return keyPattern(escapedKey(key)).test(document.cookie)
+}
+
+/**
+ * Remove the pair of key and value by making them expire
+ * @param {String} key Key string
+ * @param {String} path Target path affected by this cookie
+ * @param {String} domain Target domain name affected by this cookie
+ * @returns {Boolean} Flag whether the process completes successfully or not
+ */
+export function removeItem (key, path, domain) {
+  if (!hasItem(key)) return false
+  document.cookie = `${encodeURIComponent(key)}= expires=Thu, 01 Jan 1970 00:00:00 GMT${_.isString(domain) ? ` domain=${domain}` : &apos;&apos;}${_.isString(path) ? ` path=${path}` : &apos;&apos;}`
+  return true
+}
+
+/**
+ * Return an array of existing keys
+ * @returns {Array} List of existing keys
+ */
+export function keys () {
+  const splittedKeys = document.cookie.replace(/((?:^|\s*)[^=]+)(?=|$)|^\s*|\s*(?:=[^]*)?(?:\1|$)/g, &apos;&apos;).split(/\s*(?:=[^]*)?\s*/)
+  return splittedKeys.map(decodeURIComponent)
+}
+
+/**
+ * cookie &#x7E67;&#xFF6F;&#x7E5D;&#xFF6A;&#x7E67;&#xFF62;
+ */
+export function clear () {
+  keys().forEach(removeItem)
+}
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.5.2)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

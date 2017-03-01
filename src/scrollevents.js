@@ -1,17 +1,19 @@
-import { lazyaction, lazyimage, screentop } from './ScrollBinder/index'
-import './ScrollBinder/lazyimage.css'
-import './ScrollBinder/position.css'
+import { lazyaction, lazyimage, stickyheader } from './ScrollAction/index'
+import './ScrollAction/lazyimage.css'
+import './ScrollAction/stickyheader.css'
 import './main.css'
 
-function action (element, message) {
-  element.textContent = `Hello, ${message()}.`
+function action (element, now) {
+  element.textContent = `Hello, ${now()}.`
 }
 
 function init (ev) {
   document.removeEventListener(ev.type, init)
   lazyaction('.lazyaction', action, Date.now)
-  lazyimage('.lazyimage', 'src')
-  screentop('.screentop')
+  lazyimage('.horizontal-scroll-box .lazyimage', 'src', { parent: '.horizontal-scroll-box' })
+  lazyimage('.vertical-scroll-area .lazyimage', 'src')
+  lazyimage('.vertical-scroll-box .lazyimage', 'src', { parent: '.vertical-scroll-box' })
+  stickyheader('.stickyheader')
 }
 
 document.addEventListener('DOMContentLoaded', init, false)

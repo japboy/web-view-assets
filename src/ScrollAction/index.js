@@ -1,10 +1,13 @@
+/**
+ * ScrollAction entry point
+ */
+
 import lazyaction from './lazyaction'
 import lazyimage from './lazyimage'
-import { screentop, screenbottom } from './position'
+import stickyheader from './stickyheader'
 
 export {
   lazyaction,
   lazyimage,
-  screentop,
-  screenbottom
+  stickyheader
 }

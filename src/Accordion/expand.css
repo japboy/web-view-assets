@@ -1,8 +1,4 @@
 .expand-container {
-  border: 1px solid black;
-  box-sizing: border-box;
-  margin: 2.2rem 0;
-  padding: 1.2rem;
   transition-property: height;
   transition-duration: 0.3s;
 

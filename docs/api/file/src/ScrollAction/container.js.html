@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../../">
+  <title data-ice="title">src/ScrollAction/container.js | API Document</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  
+  
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">Accordion</div><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-expand">expand</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">Helper</div><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-elementSize">elementSize</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-eventTrigger">eventTrigger</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">ScrollAction</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/ScrollAction/container.js~Container.html">Container</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/ScrollAction/container.js~ParentContainer.html">ParentContainer</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/ScrollAction/container.js~TargetContainer.html">TargetContainer</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/ScrollAction/container.js~WindowContainer.html">WindowContainer</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-lazyaction">lazyaction</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-lazyimage">lazyimage</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-onBottom">onBottom</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-onScroll">onScroll</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-onTop">onTop</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-stickyheader">stickyheader</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">Storage</div><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-clear">clear</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getItem">getItem</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-hasItem">hasItem</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-keys">keys</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-removeItem">removeItem</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-setItem">setItem</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-supported">supported</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">src/ScrollAction/container.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/**
+ * ScrollAction: DOM &amp; Window object transparent containers
+ */
+
+import _ from &apos;underscore&apos;
+
+const win = document.defaultView
+
+/**
+ * Target element container
+ */
+class TargetContainer {
+
+  /**
+   * @param {Object} targetElement - A target DOM element
+   * @param {Object} parentElement - A parent DOM element
+   */
+  constructor (targetElement, parentContainer) {
+    /** @type {Object} */
+    this.element = targetElement  // element
+    /** @type {Object} */
+    this.parent = parentContainer
+  }
+
+  /**
+   * Relative position
+   * @type {{x: number, y: number}}
+   */
+  get position () {
+    return {
+      x: Math.floor(this.rect.left) + this.parent.scroll.x,
+      y: Math.floor(this.rect.top) + this.parent.scroll.y
+    }
+  }
+
+  /**
+   * Relative position which the origin is center of screen
+   * @type {{x: number, y: number}}
+   */
+  get positionOrigin () {
+    return {
+      x: Math.floor(this.rect.width / 2) + this.position.x,
+      y: Math.floor(this.rect.height / 2) + this.position.y
+    }
+  }
+
+  /**
+   * Rectangle position and size
+   * @type {{top: number, left: number, width: number, height: number}}
+   */
+  get rect () {
+    return this.element.getBoundingClientRect()
+  }
+
+}
+
+/**
+ * Window object container
+ */
+class WindowContainer {
+
+  constructor (childrenSelector) {
+    this.window = this
+    this.element = win
+    if (childrenSelector) {
+      const children = document.querySelectorAll(childrenSelector)
+      this.children = Array.from(children, child =&gt; new TargetContainer(child, this))
+    }
+  }
+
+  get position () {
+    return {
+      x: Math.floor(this.rect.width / 2),
+      y: Math.floor(this.rect.height / 2)
+    }
+  }
+
+  get rect () {
+    return {
+      top: 0,
+      left: 0,
+      width: this.element.innerWidth,
+      height: this.element.innerHeight,
+      scrollWidth: document.body.clientWidth,
+      scrollHeight: document.body.clientHeight
+    }
+  }
+
+  get scroll () {
+    return {
+      x: this.element.scrollX || this.element.pageXOffset,
+      y: this.element.scrollY || this.element.pageYOffset
+    }
+  }
+
+  get scrollOrigin () {
+    return {
+      x: Math.floor(this.rect.width / 2) + this.scroll.x,
+      y: Math.floor(this.rect.height / 2) + this.scroll.y
+    }
+  }
+
+  on (eventname, callback) {
+    this.element.addEventListener(eventname, callback, false)
+  }
+
+  off (eventname, callback) {
+    this.element.removeEventListener(eventname, callback)
+  }
+
+}
+
+class ParentContainer {
+
+  constructor (parentElement, childrenSelector) {
+    this.window = new WindowContainer()
+    this.element = parentElement
+    const children = this.element.querySelectorAll(childrenSelector)
+    this.children = Array.from(children, child =&gt; new TargetContainer(child, this))
+  }
+
+  get position () {
+    return {
+      x: Math.floor(this.rect.left) + this.window.scroll.x,
+      y: Math.floor(this.rect.top) + this.window.scroll.y
+    }
+  }
+
+  get positionOrigin () {
+    return {
+      x: Math.floor(this.rect.width / 2) + this.position.x,
+      y: Math.floor(this.rect.height / 2) + this.position.y
+    }
+  }
+
+  get rect () {
+    return Object.assign(this.element.getBoundingClientRect(), {
+      scrollWidth: this.element.scrollWidth,
+      scrollHeight: this.element.scrollHeight
+    })
+  }
+
+  get scroll () {
+    return {
+      x: this.element.scrollLeft,
+      y: this.element.scrollTop
+    }
+  }
+
+  get scrollOrigin () {
+    return {
+      x: Math.floor(this.rect.width / 2) + this.element.scrollLeft,
+      y: Math.floor(this.rect.height / 2) + this.element.scrollTop
+    }
+  }
+
+  get style () {
+    return global.getComputedStyle(this.element)
+  }
+
+  on (eventname, callback) {
+    this.element.addEventListener(eventname, callback, false)
+  }
+
+  off (eventname, callback) {
+    this.element.removeEventListener(eventname, callback)
+  }
+
+}
+
+class Container {
+
+  constructor (parentSelector, targetSelector) {
+    this.window = new WindowContainer()
+
+    this.parents = []
+
+    if (toString.apply(parentSelector) === &apos;[object Window]&apos;) {
+      this.parents.push(new WindowContainer(targetSelector))
+    } else if (toString.apply(parentSelector) === &apos;[object String]&apos;) {
+      const parentElements = document.querySelectorAll(parentSelector)
+      this.parents = Array.from(parentElements,
+          parentElement =&gt; new ParentContainer(parentElement, targetSelector))
+    }
+
+    this.children = _.flatten(this.parents.map(parent =&gt; parent.children))
+  }
+
+  on (eventname, callback) {
+    this.parents.forEach(parent =&gt; parent.on(eventname, callback))
+    this.window.on(eventname, callback)
+  }
+
+  off (eventname, callback) {
+    this.parents.forEach(parent =&gt; parent.off(eventname, callback))
+    this.window.off(eventname, callback)
+  }
+
+}
+
+export {
+  TargetContainer,
+  WindowContainer,
+  ParentContainer,
+  Container
+}
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.5.2)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>
