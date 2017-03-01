@@ -10,8 +10,10 @@ module.exports = [
      * @see https://webpack.js.org/configuration/entry-context/
      */
     entry: {
+      accordions: path.resolve('.', 'src', 'accordions.js'),
       scrollevents: path.resolve('.', 'src', 'scrollevents.js'),
       vendor: [
+        './modernizr-custom',
         'normalize.css'
       ]
     },
