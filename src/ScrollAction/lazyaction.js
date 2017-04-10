@@ -6,8 +6,8 @@ import { onScroll } from './scrollaction'
 
 function preprocess () {}
 
-function process (element, callback, ...args) {
-  callback(...[element].concat(args))
+function process (element, action, ...args) {
+  action(...[element].concat(args))
 }
 
 function postprocess () {}
