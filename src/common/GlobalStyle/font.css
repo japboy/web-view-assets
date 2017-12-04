@@ -1,0 +1,13 @@
+/**
+  * @example
+  *   body {
+  *     font-family: var(--base-font-family);
+  *     font-size: var(--base-font-size);
+  *     line-height: var(--base-line-height);
+  *   }
+  */
+:root {
+  --base-font-family: "Lucida Grande", "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif;
+  --base-font-size: 11px;
+  --base-line-height: 16px;
+}

@@ -1,0 +1,9 @@
+/**
+  * @example
+  *   .drawer {
+  *     z-index: calc(var(--base-z-index) + 1);
+  *   }
+  */
+:root {
+  --base-z-index: 3000;
+}

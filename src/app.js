@@ -1,12 +1,18 @@
+import './main.css';
+
 const routes = {
-  accordions: () => import(/* webpackChunkName: "accordions" */ './accordions'),
-  scrollevents: () => import(/* webpackChunkName: "scrollevents" */ './scrollevents'),
+  accordions: () => import('./accordions'),
+  components: () => import('./components'),
+  scrollevents: () => import('./scrollevents'),
 };
 
-async function init(event) {
+async function init() {
   const page = global.document.body.dataset.page;
+  const route = routes[page];
   try {
-    await routes[page]();
+    if (page && route) {
+      await route();
+    }
   } catch (error) {
     console.warn(error.message);
   }

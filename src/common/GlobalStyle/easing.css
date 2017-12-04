@@ -1,0 +1,10 @@
+/**
+  * @example
+  *   div {
+  *     transition-timing-function: var(--ease-in-sine);
+  *   }
+  */
+:root {
+  --ease-in-sine: cubic-bezier(0.47, 0, 0.745, 0.715);
+  --ease-out-cubic: cubic-bezier(0.215, 0.61, 0.355, 1);
+}

@@ -1,0 +1,23 @@
+:root {
+  /**
+   * clearfix
+   *
+   * @example
+   *   div {
+   *     @apply --clearfix;
+   *   }
+   */
+  --clearfix: {
+    zoom: 1;
+
+    @nest &::before,
+    @nest &::after {
+      content: "";
+      display: table;
+    }
+
+    @nest &::after {
+      clear: both;
+    }
+  }
+}

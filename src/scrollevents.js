@@ -1,7 +1,6 @@
-import { lazyaction, lazyimage, stickyheader } from './ScrollAction/index';
-import './ScrollAction/lazyimage.css';
-import './ScrollAction/stickyheader.css';
-import './main.css';
+import { lazyaction, lazyimage, stickyheader } from '~/common/ScrollAction/index';
+import '~/common/ScrollAction/lazyimage.css';
+import '~/common/ScrollAction/stickyheader.css';
 
 function action(element, now) {
   // eslint-disable-next-line no-param-reassign

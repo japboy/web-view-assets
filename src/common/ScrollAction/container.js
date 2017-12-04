@@ -2,9 +2,11 @@
  * ScrollAction: DOM & Window object transparent containers
  */
 
-import _ from 'underscore';
-
 const win = document.defaultView;
+
+function flatten(arr) {
+  return Array.prototype.concat(...arr);
+}
 
 /**
  * Target element container
@@ -176,7 +178,7 @@ class Container {
           parentElement => new ParentContainer(parentElement, targetSelector));
     }
 
-    this.children = _.flatten(this.parents.map(parent => parent.children));
+    this.children = flatten(this.parents.map(parent => parent.children));
   }
 
   on(eventname, callback) {

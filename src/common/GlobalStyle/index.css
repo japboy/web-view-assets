@@ -1,0 +1,13 @@
+/**
+ * @example
+ *   @import "@src/common/GlobalStyle/index.css";
+ *   body {
+ *     background-color: var(--bg-white);
+ *     color: var(--text-body);
+ *   }
+ */
+@import "./color.css";
+@import "./custom-media.css";
+@import "./font.css";
+@import "./mixins.css";
+@import "./z-index.css";

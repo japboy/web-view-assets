@@ -1,0 +1,27 @@
+/**
+  * @example
+  *   body {
+  *     background-color: var(--bg-white);
+  *     color: var(--text-body);
+  *   }
+  */
+:root {
+  /* stylelint-disable color-hex-length */
+  --accent-umber: #8ea763;
+  --accent-pink: #ff8384;
+  --price: #ff6666;
+  --star: #ffd700;
+  --lunch: #9b8e6c;
+  --tea: #9eb661;
+  --dinner: #6786d3;
+  --breakfast: #3ab7b8;
+  --text-body: #434343;
+  --text-caption: #777777;
+  --text-disable: #cccccc;
+  --border: #d8d8d8;
+  --bg-white: #ffffff;
+  --bg-white-gray: #f3f3f3;
+  --bg-white-umber: #f6f3ed;
+  --bg-straw-umber: #efede7;
+  /* stylelint-enable color-hex-length */
+}

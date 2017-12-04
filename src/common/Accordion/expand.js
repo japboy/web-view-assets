@@ -1,4 +1,4 @@
-import { elementSize } from '../Helper/index';
+import { elementSize } from '~/common/Helper/index';
 
 export default function expand(parentSelector, summarySelector, contentSelector, triggerSelector) {
   const elements = document.querySelectorAll(parentSelector);
