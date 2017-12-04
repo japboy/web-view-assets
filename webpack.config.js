@@ -1,11 +1,12 @@
 const fs = require('fs');
 const path = require('path');
 
-const globby = require('globby');
 const webpack = require('webpack');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 
-const dependencies = Object.keys(JSON.parse(fs.readFileSync('./package.json', { encoding: 'utf8' })).dependencies);
+const aliasrc = require('./.aliasrc');
+
+const pkg = JSON.parse(fs.readFileSync('./package.json', { encoding: 'utf8' }));
 const env = process.env;
 
 module.exports = [
@@ -14,7 +15,7 @@ module.exports = [
      * @see https://webpack.js.org/configuration/entry-context/
      */
     entry: {
-      vendor: dependencies.concat(globby.sync(['./src/Vendor/**/*.css', './src/Vendor/**/*.js'])),
+      vendor: Object.keys(pkg.dependencies),
       app: path.resolve('.', 'src', 'app.js'),
     },
 
@@ -62,7 +63,30 @@ module.exports = [
             },
           ],
         },
+        {
+          test: /\.vue$/,
+          use: [
+            {
+              loader: 'vue-loader',
+              // @see https://github.com/vuejs/vue-loader/blob/master/docs/en/options.md
+              options: {
+                cssSourceMap: true,
+                esModule: true,
+                // @see https://github.com/vuejs/vue-loader/blob/master/docs/en/features/css-modules.md#configuring-css-loader-query
+                cssModules: {
+                  // [hash:base64] changes depending on build platforms (eg. windows or mac)
+                  localIdentName: '[hash:base64:7]',
+                },
+              },
+            },
+          ],
+        },
       ],
+    },
+
+    // @see https://webpack.js.org/configuration/resolve/
+    resolve: {
+      alias: aliasrc.resolve.alias,
     },
 
     /**
@@ -106,7 +130,6 @@ module.exports = [
       contentBase: path.resolve(__dirname, 'docs'),
       // hot: true,
       port: 8080,
-      // historyApiFallback: true,
       https: true,
     },
 
