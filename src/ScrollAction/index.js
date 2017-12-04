@@ -2,12 +2,6 @@
  * ScrollAction entry point
  */
 
-import lazyaction from './lazyaction'
-import lazyimage from './lazyimage'
-import stickyheader from './stickyheader'
-
-export {
-  lazyaction,
-  lazyimage,
-  stickyheader
-}
+export { default as lazyaction } from './lazyaction';
+export { default as lazyimage } from './lazyimage';
+export { default as stickyheader } from './stickyheader';

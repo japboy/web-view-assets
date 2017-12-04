@@ -1,5 +1,2 @@
-import { expand } from './expand'
-
-export {
-  expand
-}
+// eslint-disable-next-line import/prefer-default-export
+export { default as expand } from './expand';
