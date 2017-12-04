@@ -1,8 +1,12 @@
-const path = require('path')
-const webpack = require('webpack')
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
+const fs = require('fs');
+const path = require('path');
 
-const env = process.env
+const globby = require('globby');
+const webpack = require('webpack');
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+
+const dependencies = Object.keys(JSON.parse(fs.readFileSync('./package.json', { encoding: 'utf8' })).dependencies);
+const env = process.env;
 
 module.exports = [
   {
@@ -10,12 +14,8 @@ module.exports = [
      * @see https://webpack.js.org/configuration/entry-context/
      */
     entry: {
-      accordions: path.resolve('.', 'src', 'accordions.js'),
-      scrollevents: path.resolve('.', 'src', 'scrollevents.js'),
-      vendor: [
-        './modernizr-custom',
-        'normalize.css'
-      ]
+      vendor: dependencies.concat(globby.sync(['./src/Vendor/**/*.css', './src/Vendor/**/*.js'])),
+      app: path.resolve('.', 'src', 'app.js'),
     },
 
     /**
@@ -23,57 +23,79 @@ module.exports = [
      */
     output: {
       filename: '[name].js',
-      path: path.resolve('.', 'docs'),
-      publicPath: '/'
+      chunkFilename: '[name].chunk.js',
+      path: path.resolve('.', 'docs', 'assets'),
+      publicPath: '/assets',
     },
 
     /**
      * @see https://webpack.js.org/configuration/module/
      */
     module: {
-      loaders: [
+      rules: [
         {
-          test: /\.(js|jsx)$/,
-          loader: 'babel-loader?cacheDirectory=true',
-          exclude: /node_modules/
+          test: /\.js$/,
+          use: [
+            {
+              loader: 'babel-loader',
+              options: {
+                cacheDirectory: true,
+              },
+            },
+          ],
+          exclude: /node_modules/,
         },
         {
           test: /\.css$/,
-          loaders: [
-            'style-loader',
-            'css-loader?importLoaders=1',
-            'postcss-loader?sourceMap=inline'
-          ]
-        }
-      ]
+          use: [
+            {
+              loader: 'style-loader',
+            },
+            {
+              loader: 'css-loader',
+              options: {
+                importLoaders: 1,
+              },
+            },
+            {
+              loader: 'postcss-loader',
+            },
+          ],
+        },
+      ],
     },
 
     /**
      * @see https://webpack.js.org/configuration/plugins/
      */
     plugins: [
-      new webpack.DefinePlugin({
-        'process.env': {
-          NODE_ENV: JSON.stringify(env.NODE_ENV)
-        }
+      /**
+       * @see https://webpack.js.org/plugins/environment-plugin/
+       */
+      new webpack.EnvironmentPlugin({
+        NODE_ENV: env.NODE_ENV || 'development',
       }),
 
       /**
+       * @see https://webpack.js.org/plugins/commons-chunk-plugin/
        * @see https://webpack.js.org/guides/code-splitting-libraries/
        */
       new webpack.optimize.CommonsChunkPlugin({
-        names: [
-          'vendor',
-          'manifest'
-        ]
+        names: ['vendor', 'manifest'],
+        minChunks: Infinity,
       }),
+
+      /**
+       * @see https://medium.com/webpack/webpack-3-official-release-15fd2dd8f07b
+       */
+      new webpack.optimize.ModuleConcatenationPlugin(),
 
       /**
        * @see https://webpack.js.org/plugins/uglifyjs-webpack-plugin/
        */
       new UglifyJSPlugin({
-        sourceMap: true
-      })
+        sourceMap: true,
+      }),
     ],
 
     /**
@@ -81,15 +103,16 @@ module.exports = [
      */
     devServer: {
       compress: true,
-      contentBase: path.resolve('.', 'docs'),
+      contentBase: path.resolve(__dirname, 'docs'),
+      // hot: true,
       port: 8080,
-      historyApiFallback: true,
-      https: true
+      // historyApiFallback: true,
+      https: true,
     },
 
     /**
      * @see https://webpack.js.org/configuration/devtool/
      */
-    devtool: 'inline-source-map'
-  }
-]
+    devtool: 'source-map',
+  },
+];

@@ -1,10 +1,24 @@
 {
+  "plugins": [
+    "syntax-dynamic-import"
+  ],
   "presets": [
-    ["env", {
-      "targets": {
-        "safari": 6,
-        "ie": 9
+    [
+      "env", {
+        "modules": false,
+        "targets": {
+          "browsers": [
+            "Chrome >= 50",
+            "ChromeAndroid >= 50",
+            "Edge >= 12",
+            "Explorer >= 11",
+            "Firefox >= 40",
+            "FirefoxAndroid >= 40",
+            "iOS >= 7",
+            "Safari >= 6"
+          ]
+        }
       }
-    }]
+    ]
   ]
 }
